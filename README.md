@@ -1,30 +1,35 @@
-# <p style="text-align: center;">TOMCAT SETUP IN PODMAN</p>
+# <p style="text-align: center;">Apache Tomcat with Podman</p>
 
 
 ### 1. Task Requirement
 
 Set up Apache Tomcat on Podman, which is an alternative to Docker for running containers.
-### 2. Definition Tomcat
-Apache Tomcat, often referred to as Tomcat, is an open-source application server developed by the Apache Software Foundation. It is a popular choice for running Java-based web applications. Tomcat serves as a Java Servlet and JavaServer Pages (JSP) container, providing a runtime environment for executing these Java technologies.
+2. **Definition Tomcat**
+Apache Tomcat is an open-source web server and servlet container developed by the Apache Software Foundation. It serves as a robust platform for running Java-based web applications, particularly those that use Java Servlet, JavaServer Pages (JSP), WebSocket, and associated Java technologies.
 
-###3. Definition Podman 
-Podman is an open-source container management tool used for running and managing containerized applications on Linux-based systems.
+When a request is made to Tomcat, it handles the HTTP request, communicates with the Java servlets or JSPs as needed, processes the request, and sends the response back to the client. It serves as an intermediary between the client and the Java-based web application, managing the execution of dynamic content.
 
-###4. Environment Details
+3. **Definition Podman**
+Podman is a Linux tool for creating and managing containers. It doesn't need a background daemon, enhancing security, and works well with system standards like OCI. It supports rootless containers, integrates with systemd, and handles container tasks like images, volumes, and networks efficiently.
+4. **Environment Details**
 - **Operating System:** Ubuntu 20.04
 
 **System Configuration:**
-- **CPU:** Intel Core i3-8350U CPU @ 1.70GHz x 8
+- **CPU:** Intel Core i5-8350U CPU
 - **RAM:** 8GB (4GB x 2 SODIMM DDR4)
 - **Storage:** 256GB
+- Note: My system is equipped with an Intel Core i5-8350U CPU, 8GB
+ RAM (4GB x 2 DDR4 SODIMM), and 512GB storage. However, this 
+configuration may not be necessary for everyone.
 
-###5. List of Tools and Technologies
-- Tomcat
+
+5. **List of Tools and Technologies**
+- Apache Tomcat
 - Podman 
 
-###6. Command for the setup or configuration
+6. **Command for the setup or configuration**
 
-##### Step 1 : Update system repositories.
+Step 1 : **Update system repositories.**
 
 ```
 sudo apt update
@@ -36,7 +41,17 @@ sudo apt update
 
 - update: This is the action you want APT to perform. When you run "sudo apt update," it instructs APT to update the package lists and information about available software packages from the configured repositories.
 
-##### Step 2 : Install podman.
+
+```
+sudo apt upgrade
+```
+
+- sudo: This part of the command is used to execute the following command with administrative or superuser privileges.
+
+- apt: Refers to the APT package manager, which is commonly used on Debian-based Linux distributions like Ubuntu.
+- Upgrade : Upgrade, means to replace an older version of software with a newer one, bringing improvements, fixes, or new features to enhance its performance or capabilities.
+- 
+Step 7 : **Install podman.**
 
 ```
 sudo apt install podman  
@@ -61,11 +76,6 @@ sudo apt-key add - < Release.key
 ```
 
 ```
-sudo apt update
-
-```
-
-```
 sudo apt install -y podman
 
 ```
@@ -77,7 +87,7 @@ podman --version
 
 "Note : Adding a repository is required for Ubuntu 20 version and is not needed for the latest version of Ubuntu."
 
-##### Step 3 : Pull Tomcat Docker Image
+Step 8 : **Pull Tomcat Docker Image**
 
 You can pull the official Tomcat Docker image from Docker Hub. Open your terminal and run:
 
@@ -104,9 +114,9 @@ Writing manifest to image destination
 Storing signatures
 3db0f5668a77664c221b187b735d86ed63b1d3b98a15d4e80676b13b9b155fdc
 ```
+- The command "podman pull tomcat" is used to download (or pull) the Docker image named "tomcat" from a container registry. This fetches the specified image, in this case, "tomcat," which typically contains the Tomcat web server, and makes it available locally for use in creating and running containers with Podman.
 
-
-##### Step 4 :  Create a Podman Container
+Step 9 :  **Create a Podman Container**
 
 ```
 podman run -d -p 8081:8080 --name my-tomcat docker.io/library/tomcat
@@ -127,7 +137,7 @@ d1cb2f106e2ce508755a24126b10b904325054faed69418071a8fc70c73d09e9
 ##### Step 5 : Check container 
 
 ```
-podman ps 
+podman ps -a
 ```
 Output :
 ```
@@ -138,6 +148,7 @@ d1cb2f106e2c  docker.io/library/tomcat:latest  catalina.sh run  About a minute a
 
 - List the currently running containers managed by the Podman tool.
 - Provides information about container IDs, names, status, ports, and more.
+- Using "-a" in commands means including or considering all items, not just the ones currently active or visible.
 
 ##### Step 6 : Enter Tomcat Container
 
@@ -155,7 +166,7 @@ root@d1cb2f106e2c:/usr/local/tomcat#
 
 podman exec: This part of the command tells Podman to execute a command within an existing container.
 
-- -it: These are options used to make the interaction with the container's shell interactive. "i" stands for interactive, and "t" allocates a pseudo-TTY for the shell.
+- -it: "-it" is like choosing to have a chat with the container, letting you interact and communicate with it as if you're using a real-time conversation.
 
 - my-tomcat: This is the name of the container you want to access. In this case, it's "my-tomcat."
 
@@ -198,7 +209,12 @@ Output :
 root@d1cb2f106e2c:/usr/local/tomcat/webapps.dist# cp -R * ../webapps
 root@d1cb2f106e2c:/usr/local/tomcat/webapps.dist# 
 ```
-- cp -R * ../webapps: Here, you've used the cp command to copy all the contents (including subdirectories and files) of the webapps.dist directory to the webapps directory located one level above. The -R flag indicates a recursive copy to ensure that all contents are copied.
+
+- "webapps.dist" is a folder that probably holds initial or default versions of web applications used by the Tomcat server. It likely serves as a starting point for setting up or configuring web applications in Tomcat.
+- cp: This is the command used to copy files and directories.
+-R: This flag stands for "recursive," allowing the command to copy directories and their contents recursively.
+*: Represents a wildcard that matches all files and directories in the current location.
+../webapps: Specifies the destination directory where the files and directories will be copied.
 
 
 
