@@ -4,14 +4,8 @@
 ### 1. Task Requirement
 
 Set up Apache Tomcat on Podman, which is an alternative to Docker for running containers.
-2. **Definition Tomcat**
-Apache Tomcat is an open-source web server and servlet container developed by the Apache Software Foundation. It serves as a robust platform for running Java-based web applications, particularly those that use Java Servlet, JavaServer Pages (JSP), WebSocket, and associated Java technologies.
 
-When a request is made to Tomcat, it handles the HTTP request, communicates with the Java servlets or JSPs as needed, processes the request, and sends the response back to the client. It serves as an intermediary between the client and the Java-based web application, managing the execution of dynamic content.
-
-3. **Definition Podman**
-Podman is a Linux tool for creating and managing containers. It doesn't need a background daemon, enhancing security, and works well with system standards like OCI. It supports rootless containers, integrates with systemd, and handles container tasks like images, volumes, and networks efficiently.
-4. **Environment Details**
+2. **Environment Details**
 - **Operating System:** Ubuntu 20.04
 
 **System Configuration:**
@@ -23,11 +17,15 @@ Podman is a Linux tool for creating and managing containers. It doesn't need a b
 configuration may not be necessary for everyone.
 
 
-5. **List of Tools and Technologies**
+3. **List of Tools and Technologies**
 - Apache Tomcat
-- Podman 
+Apache Tomcat is an open-source web server and servlet container developed by the Apache Software Foundation. It serves as a robust platform for running Java-based web applications, particularly those that use Java Servlet, JavaServer Pages (JSP), WebSocket, and associated Java technologies.
 
-6. **Command for the setup or configuration**
+- Podman
+Podman is a Linux tool for creating and managing containers. It doesn't need a background daemon, enhancing security, and works well with system standards like OCI. It supports rootless containers, integrates with systemd, and handles container tasks like images, volumes, and networks efficiently.
+
+
+4. **Command for the setup or configuration**
 
 Step 1 : **Update system repositories.**
 
@@ -51,7 +49,7 @@ sudo apt upgrade
 - apt: Refers to the APT package manager, which is commonly used on Debian-based Linux distributions like Ubuntu.
 - Upgrade : Upgrade, means to replace an older version of software with a newer one, bringing improvements, fixes, or new features to enhance its performance or capabilities.
 - 
-Step 7 : **Install podman.**
+Step 5 : **Install podman.**
 
 ```
 sudo apt install podman  
@@ -87,7 +85,7 @@ podman --version
 
 "Note : Adding a repository is required for Ubuntu 20 version and is not needed for the latest version of Ubuntu."
 
-Step 8 : **Pull Tomcat Docker Image**
+Step 6 : **Pull Tomcat Docker Image**
 
 You can pull the official Tomcat Docker image from Docker Hub. Open your terminal and run:
 
@@ -116,7 +114,7 @@ Storing signatures
 ```
 - The command "podman pull tomcat" is used to download (or pull) the Docker image named "tomcat" from a container registry. This fetches the specified image, in this case, "tomcat," which typically contains the Tomcat web server, and makes it available locally for use in creating and running containers with Podman.
 
-Step 9 :  **Create a Podman Container**
+Step 7 :  **Create a Podman Container**
 
 ```
 podman run -d -p 8081:8080 --name my-tomcat docker.io/library/tomcat
@@ -134,7 +132,7 @@ d1cb2f106e2ce508755a24126b10b904325054faed69418071a8fc70c73d09e9
 - --name my-tomcat: Names the container "my-tomcat."
 
 
-##### Step 5 : Check container 
+##### Step 8 : Check container 
 
 ```
 podman ps -a
@@ -150,7 +148,7 @@ d1cb2f106e2c  docker.io/library/tomcat:latest  catalina.sh run  About a minute a
 - Provides information about container IDs, names, status, ports, and more.
 - Using "-a" in commands means including or considering all items, not just the ones currently active or visible.
 
-##### Step 6 : Enter Tomcat Container
+##### Step 9 : Enter Tomcat Container
 
 ```
 podman exec -it my-tomcat /bin/bash
@@ -172,7 +170,7 @@ podman exec: This part of the command tells Podman to execute a command within a
 
 - /bin/bash: This is the command that you want to run inside the container. It launches a Bash shell, providing you with an interactive terminal session within the container.
 
-##### Step 6 : Changed The Current Directory
+##### Step 10 : Changed The Current Directory
 
 ```
 cd webapps.dist/
@@ -187,7 +185,7 @@ root@d1cb2f106e2c:/usr/local/tomcat/webapps.dist#
 
 - The command cd webapps.dist/ is used to change the current working directory to a directory called "webapps.dist."
 
-##### Step 7 : Check List of Files 
+##### Step 11 : Check List of Files 
 
 ```
 ls
@@ -199,7 +197,7 @@ docs  examples  host-manager  manager  ROOT
 root@d1cb2f106e2c:/usr/local/tomcat/webapps.dist#
 ```
 
-##### Step 8 : Copy All The Contents
+##### Step 12 : Copy All The Contents
 
 ```
 cp -R * ../webapps
@@ -209,16 +207,14 @@ Output :
 root@d1cb2f106e2c:/usr/local/tomcat/webapps.dist# cp -R * ../webapps
 root@d1cb2f106e2c:/usr/local/tomcat/webapps.dist# 
 ```
-
-- "webapps.dist" is a folder that probably holds initial or default versions of web applications used by the Tomcat server. It likely serves as a starting point for setting up or configuring web applications in Tomcat.
-- cp: This is the command used to copy files and directories.
--R: This flag stands for "recursive," allowing the command to copy directories and their contents recursively.
-*: Represents a wildcard that matches all files and directories in the current location.
-../webapps: Specifies the destination directory where the files and directories will be copied.
+cp: This is the command for 'copy.'
+-R: It stands for 'recursive,' which means it will copy directories and their contents recursively.
+*: This is a wildcard character that represents all files and directories in the current directory.
+../webapps: This is the destination directory where the files and directories will be copied. The '..' refers to the parent directory, and 'webapps' is the directory within the parent directory where the content will be copied.
 
 
 
-##### Step 9 : Change Directory
+##### Step 13 : Change Directory
 
 ```
 cd ..
@@ -231,7 +227,7 @@ root@d1cb2f106e2c:/usr/local/tomcat#
 
 
 
-##### Step 10 : Changed The Current Directory
+##### Step 14 : Changed The Current Directory
 
 ```
 cd webapps/
@@ -244,7 +240,7 @@ root@d1cb2f106e2c:/usr/local/tomcat# cd webapps/
 root@d1cb2f106e2c:/usr/local/tomcat/webapps#
 ```
 
-##### Step 10 : Check List of Files 
+##### Step 15 : Check List of Files 
 
 ```
 ls
@@ -262,7 +258,7 @@ root@d1cb2f106e2c:/usr/local/tomcat/webapps#
 
 - ls: Finally, you used the ls command to list the contents of the webapps directory, which should now include the directories docs, examples, host-manager, manager, and ROOT. This indicates that you've successfully copied the contents from webapps.dist to webapps
 
-##### Step 11 : Access Deployed Web Application
+##### Step 16 : Access Deployed Web Application
 
 - You can access your deployed web application by visiting http://localhost:8081/your-app in your web browser. Replace "your-app" with the name of your deployed application.
 
