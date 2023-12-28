@@ -18,10 +18,10 @@ configuration may not be necessary for everyone.
 
 
 3. **List of Tools and Technologies**
-- Apache Tomcat
+**- Apache Tomcat :-**
 Apache Tomcat is an open-source web server and servlet container developed by the Apache Software Foundation. It serves as a robust platform for running Java-based web applications, particularly those that use Java Servlet, JavaServer Pages (JSP), WebSocket, and associated Java technologies.
 
-- Podman
+**- Podman :-**
 Podman is a Linux tool for creating and managing containers. It doesn't need a background daemon, enhancing security, and works well with system standards like OCI. It supports rootless containers, integrates with systemd, and handles container tasks like images, volumes, and networks efficiently.
 
 
